@@ -7,3 +7,4 @@
  * Created: 1/06/2026
  */
 
+INSERT INTO aplicaciones (Aplcodigo, Aplnombre, Aplestado) VALUES (8087, 'Carreras', '1');
