@@ -91,6 +91,15 @@ CREATE TABLE IF NOT EXISTS `proveedores` (
   PRIMARY KEY (`Procodigo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+
+CREATE TABLE IF NOT EXISTS `carreras` (
+  `codigo_carrera`       varchar(5)      NOT NULL,
+  `nombre_carrera`   varchar(45) NOT NULL,
+  `codigo_facultad`      varchar(5)  NOT NULL,
+  `estatus_carrera`   varchar(1)      NOT NULL,
+  PRIMARY KEY (`codigo_carrera`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 CREATE TABLE IF NOT EXISTS `acreedores` (
   `Acrecodigo`       int(11)      NOT NULL AUTO_INCREMENT,
   `Acrenombre`       varchar(100) NOT NULL,

@@ -11,9 +11,9 @@ package Controlador.Carreras;
 // JENNIFER BARRIOS, ENCARGADA DE PROVEEDORES.
 
 public class clsCarreras {
-    private int codigo_carrera;
+    private String codigo_carrera;
     private String nombre_carrera;
-    private int codigo_facultad;
+    private String codigo_facultad;
     private String estatus_carrera;
    
     
@@ -21,25 +21,20 @@ public class clsCarreras {
     public clsCarreras() {
     }
 
-    public clsCarreras(int codigo_carrera) {
+    public clsCarreras(String codigo_carrera) {
         this.codigo_carrera = codigo_carrera;
     }
 
     // Getters y Setters
-    public int getcodigo_carrera() { return codigo_carrera; }
-    public void setcodigo_carrera(int codigo_carrera) { this.codigo_carrera = codigo_carrera; }
+    public String getcodigo_carrera() { return codigo_carrera; }
+    public void setcodigo_carrera(String codigo_carrera) { this.codigo_carrera = codigo_carrera; }
 
     public String getnombre_carrera() { return nombre_carrera; }
     public void setnombre_carrera(String nombre_carrera) { this.nombre_carrera = nombre_carrera; }
 
-    public int getCodigo_facultad() {
-        return codigo_facultad;
-    }
-
-    public void setCodigo_facultad(int codigo_facultad) {
-        this.codigo_facultad = codigo_facultad;
-    }
-
+    public String getcodigo_facultad() { return codigo_facultad; }
+    public void setcodigo_facultad(String codigo_facultad) { this.codigo_facultad = codigo_facultad; }
+    
     
 
     public String getestatus_carrera() { return estatus_carrera; }

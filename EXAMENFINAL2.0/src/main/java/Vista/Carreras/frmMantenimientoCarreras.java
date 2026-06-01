@@ -4,11 +4,12 @@
  */
 package Vista.Carreras;
 
-import Controlador.Compras.clsProveedor;
 import Controlador.clsUsuarioConectado;
 
+import Controlador.Carreras.clsCarreras;
+import Modelo.Carreras.CarrerasDAO;
 
-import Modelo.Compras.ProveedorDAO;
+
 import Modelo.BitacoraDAO;
 import Modelo.PermisosDAO;
 
@@ -42,12 +43,12 @@ import Modelo.Conexion;
  */
 public class frmMantenimientoCarreras extends javax.swing.JFrame {
 
-   ProveedorDAO proveedorDAO = new ProveedorDAO();
+   CarrerasDAO carrerasDAO = new CarrerasDAO();
     BitacoraDAO bitacoraDAO = new BitacoraDAO();
     PermisosDAO permisosDAO = new PermisosDAO();
     
     private int idUsuarioConectado = clsUsuarioConectado.getUsuId();
-    int Aplcodigo = 3004;
+    int Aplcodigo = 8087;
 
     /**
      * Creates new form frmMantenimientoCarreras
@@ -61,11 +62,6 @@ public class frmMantenimientoCarreras extends javax.swing.JFrame {
             this.dispose();
             return;
         }
-        
-        jComboBox1.removeAllItems();
-        jComboBox1.addItem("Seleccione un estado");
-        jComboBox1.addItem("Activo");
-        jComboBox1.addItem("Inactivo");
         
         llenarTabla();
         cargarPermisosVisuales();
@@ -102,26 +98,22 @@ public class frmMantenimientoCarreras extends javax.swing.JFrame {
 
     public void llenarTabla() {
         DefaultTableModel modelo = new DefaultTableModel();
-        modelo.addColumn("CODIGO");
-        modelo.addColumn("NOMBRE");
-        modelo.addColumn("NIT");
-        modelo.addColumn("CUENTA");
-        modelo.addColumn("CONTACTO");
-        modelo.addColumn("DEPTO");
-        modelo.addColumn("ESTADO");
+        modelo.addColumn("CODIGO CARRERA");
+        modelo.addColumn("NOMBRE CARRERA");
+        modelo.addColumn("CODIGO FACULTAD");
+        modelo.addColumn("ESTATUS");
+       
 
-        tablaProveedores.setModel(modelo);
-        List<clsProveedor> listaProveedores = proveedorDAO.consultaProveedores();
+        tablaCarreras.setModel(modelo);
+        List<clsCarreras> listaCarreras = carrerasDAO.consultaCarreras();
 
-        for (clsProveedor proveedor : listaProveedores) {
+        for (clsCarreras carrera : listaCarreras) {
             modelo.addRow(new Object[]{
-                proveedor.getProcodigo(),
-                proveedor.getPronombre(),
-                proveedor.getPronit(),
-                proveedor.getProcuentabancaria(),
-                proveedor.getProcontacto(),
-                proveedor.getProdepartamento(),
-                proveedor.getProestado()
+                carrera.getcodigo_carrera(),
+                carrera.getnombre_carrera(),
+                carrera.getcodigo_facultad(),
+                carrera.getestatus_carrera(),
+                
             });
         }
     }
@@ -130,7 +122,7 @@ public class frmMantenimientoCarreras extends javax.swing.JFrame {
         txtProCodigo.setText("");
         txtProNombre.setText("");
         txtProNit.setText("");
-        jComboBox1.setSelectedIndex(0);
+      
     }
 
     /**
@@ -145,7 +137,7 @@ public class frmMantenimientoCarreras extends javax.swing.JFrame {
         jInternalFrame1 = new javax.swing.JInternalFrame();
         jSeparator1 = new javax.swing.JSeparator();
         jScrollPane2 = new javax.swing.JScrollPane();
-        tablaProveedores = new javax.swing.JTable();
+        tablaCarreras = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         txtProCodigo = new javax.swing.JTextField();
@@ -158,17 +150,17 @@ public class frmMantenimientoCarreras extends javax.swing.JFrame {
         btnEliminar = new javax.swing.JButton();
         btnBuscar = new javax.swing.JButton();
         btnLimpiar = new javax.swing.JButton();
-        jComboBox1 = new javax.swing.JComboBox<>();
         jLabel8 = new javax.swing.JLabel();
         jButton6 = new javax.swing.JButton();
         btnSalida = new javax.swing.JButton();
         btnReportes = new javax.swing.JButton();
+        txtEstatus = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jInternalFrame1.setVisible(true);
 
-        tablaProveedores.setModel(new javax.swing.table.DefaultTableModel(
+        tablaCarreras.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -176,7 +168,7 @@ public class frmMantenimientoCarreras extends javax.swing.JFrame {
                 "CODIGO CARRERA", "NOMBRE CARRERA", "CODIGO FACULTAD", "ESTADO"
             }
         ));
-        jScrollPane2.setViewportView(tablaProveedores);
+        jScrollPane2.setViewportView(tablaCarreras);
 
         jLabel1.setText("CARRERAS");
 
@@ -221,13 +213,6 @@ public class frmMantenimientoCarreras extends javax.swing.JFrame {
             }
         });
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
-            }
-        });
-
         jLabel8.setText("ESTADO:");
 
         jButton6.setText("AYUDA");
@@ -265,25 +250,23 @@ public class frmMantenimientoCarreras extends javax.swing.JFrame {
                                 .addGroup(jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel3)
                                     .addComponent(jLabel4)
-                                    .addComponent(jLabel2))
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel8))
                                 .addGap(31, 31, 31)
                                 .addGroup(jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtProCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addComponent(txtEstatus, javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(txtProNit, javax.swing.GroupLayout.DEFAULT_SIZE, 101, Short.MAX_VALUE)
-                                        .addComponent(txtProNombre))
-                                    .addComponent(txtProCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(jInternalFrame1Layout.createSequentialGroup()
-                                .addComponent(jLabel8)
-                                .addGap(33, 33, 33)
-                                .addComponent(jComboBox1, 0, 174, Short.MAX_VALUE)))
-                        .addGap(87, 87, 87)
+                                        .addComponent(txtProNombre)))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 95, Short.MAX_VALUE)
                         .addGroup(jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(btnRegistrar)
                             .addComponent(btnModificarr)
                             .addComponent(btnEliminar)
                             .addComponent(btnBuscar)
                             .addComponent(btnLimpiar))
-                        .addGap(48, 48, 48))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
                     .addGroup(jInternalFrame1Layout.createSequentialGroup()
                         .addComponent(jButton6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -322,14 +305,13 @@ public class frmMantenimientoCarreras extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnBuscar)
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel8))
+                            .addComponent(jLabel8)
+                            .addComponent(txtEstatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnLimpiar)
                             .addGroup(jInternalFrame1Layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addComponent(btnLimpiar))
-                            .addGroup(jInternalFrame1Layout.createSequentialGroup()
-                                .addGap(31, 31, 31)
+                                .addGap(32, 32, 32)
                                 .addGroup(jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jButton6)
                                     .addComponent(btnSalida)
@@ -361,19 +343,19 @@ public class frmMantenimientoCarreras extends javax.swing.JFrame {
 
         // VALIDACIÓN DE PERMISO (Incluye Bypass Admin ID 1)
         if (!puedeInsertar()) {
-            JOptionPane.showMessageDialog(null, "No posee permisos para registrar proveedores.");
+            JOptionPane.showMessageDialog(null, "No posee permisos para registrar carreras.");
             return;
         }
 
-        clsProveedor proveedor = new clsProveedor();
-        proveedor.setPronombre(txtProNombre.getText());
-        proveedor.setPronit(txtProNit.getText());
-        proveedor.setProestado(jComboBox1.getSelectedItem().toString());
+        clsCarreras carrera = new clsCarreras();
+        carrera.setnombre_carrera(txtProNombre.getText());
+        carrera.setcodigo_facultad(txtProNit.getText());
+        carrera.setestatus_carrera(txtEstatus.getText());
 
-        if (proveedorDAO.ingresarProveedor(proveedor) > 0) {
-            JOptionPane.showMessageDialog(null, "Proveedor Registrado con éxito");
+        if (carrerasDAO.ingresarCarrera(carrera) > 0) {
+            JOptionPane.showMessageDialog(null, "Carrera Registrado con éxito");
             // Registro en bitácora con el ID del usuario actual
-            bitacoraDAO.insert(idUsuarioConectado, Aplcodigo, "Registró Proveedor");
+            bitacoraDAO.insert(idUsuarioConectado, Aplcodigo, "Registró Carrera");
             llenarTabla();
             limpiarCampos();
         }
@@ -389,20 +371,20 @@ public class frmMantenimientoCarreras extends javax.swing.JFrame {
         }
 
         if (txtProCodigo.getText().trim().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Debe buscar primero un proveedor antes de modificarlo.");
+            JOptionPane.showMessageDialog(null, "Debe buscar primero un carrera antes de modificarlo.");
             return;
         }
 
-        clsProveedor proveedor = new clsProveedor();
-        proveedor.setProcodigo(Integer.parseInt(txtProCodigo.getText()));
-        proveedor.setPronombre(txtProNombre.getText());
-        proveedor.setPronit(txtProNit.getText());
-        proveedor.setProestado(jComboBox1.getSelectedItem().toString());
+        clsCarreras carrera = new clsCarreras();
+        carrera.setcodigo_carrera(txtProCodigo.getText());
+        carrera.setnombre_carrera(txtProNombre.getText());
+        carrera.setcodigo_facultad(txtProNit.getText());
+        carrera.setestatus_carrera(txtEstatus.getText());
 
-        if (proveedorDAO.actualizaProveedor(proveedor) > 0) {
+        if (carrerasDAO.actualizarCarrera(carrera) > 0) {
             JOptionPane.showMessageDialog(null, "Información actualizada correctamente");
             // Registro en bitácora
-            bitacoraDAO.insert(idUsuarioConectado, Aplcodigo, "Modificó Proveedor ID: " + txtProCodigo.getText());
+            bitacoraDAO.insert(idUsuarioConectado, Aplcodigo, "Modificó Carrera ID: " + txtProCodigo.getText());
             llenarTabla();
             limpiarCampos();
         }
@@ -417,18 +399,18 @@ public class frmMantenimientoCarreras extends javax.swing.JFrame {
         }
 
         if (txtProCodigo.getText().trim().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Ingrese el código del proveedor que desea eliminar.");
+            JOptionPane.showMessageDialog(null, "Ingrese el código del carrera que desea eliminar.");
             return;
         }
 
-        int confirmacion = JOptionPane.showConfirmDialog(null, "¿Desea eliminar este proveedor?", "Confirmar", JOptionPane.YES_NO_OPTION);
+        int confirmacion = JOptionPane.showConfirmDialog(null, "¿Desea eliminar este carrera?", "Confirmar", JOptionPane.YES_NO_OPTION);
         if (confirmacion == 0) {
-            clsProveedor proveedor = new clsProveedor();
-            proveedor.setProcodigo(Integer.parseInt(txtProCodigo.getText()));
+            clsCarreras carrera = new clsCarreras();
+            carrera.setcodigo_carrera(txtProCodigo.getText());
 
-            if (proveedorDAO.borrarProveedor(proveedor) > 0) {
+            if (carrerasDAO.borrarCarrera(carrera) > 0) {
                 // Registro en bitácora si se eliminó con éxito
-                bitacoraDAO.insert(idUsuarioConectado, Aplcodigo, "Eliminó Proveedor ID: " + txtProCodigo.getText());
+                bitacoraDAO.insert(idUsuarioConectado, Aplcodigo, "Eliminó Carrera ID: " + txtProCodigo.getText());
             }
             llenarTabla();
             limpiarCampos();
@@ -448,19 +430,19 @@ public class frmMantenimientoCarreras extends javax.swing.JFrame {
             return;
         }
 
-        clsProveedor proveedor = new clsProveedor();
-        proveedor.setProcodigo(Integer.parseInt(txtProCodigo.getText()));
-        proveedor = proveedorDAO.consultaProveedorPorId(proveedor);
+        clsCarreras carrera = new clsCarreras();
+        carrera.setcodigo_carrera(txtProCodigo.getText());
+        carrera = carrerasDAO.consultaCarreraPorId(carrera);
 
-        if (proveedor.getPronombre() != null) {
-            txtProNombre.setText(proveedor.getPronombre());
-            txtProNit.setText(proveedor.getPronit());
-            jComboBox1.setSelectedItem(proveedor.getProestado());
+        if (carrera.getnombre_carrera() != null) {
+            txtProNombre.setText(carrera.getnombre_carrera());
+            txtProNit.setText(carrera.getcodigo_facultad());
+            txtEstatus.setText(carrera.getestatus_carrera());
 
             // Registro en bitácora de la consulta realizada
-            bitacoraDAO.insert(idUsuarioConectado, Aplcodigo, "Buscó Proveedor ID: " + txtProCodigo.getText());
+            bitacoraDAO.insert(idUsuarioConectado, Aplcodigo, "Buscó Carrera ID: " + txtProCodigo.getText());
         } else {
-            JOptionPane.showMessageDialog(null, "Proveedor no encontrado");
+            JOptionPane.showMessageDialog(null, "Carrera no encontrado");
         }
 
         // TODO add your handling code here:
@@ -471,117 +453,81 @@ public class frmMantenimientoCarreras extends javax.swing.JFrame {
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        // TODO add your handling code here:
         try {
-            // Buscar el archivo de ayuda en diferentes ubicaciones
-            String[] rutasPosibles = {
-                "AyudasCompras/AyudaComprasHelp.chm",
-                "src/main/resources/AyudasCompras/AyudaComprasHelp.chm",
-                "AyudaComprasHelp.chm"
-            };
+        File archivo = new File(
+            "src\\main\\java\\Ayudas\\Compras\\AyudaComprasHelp.chm"
+        );
 
-            File archivoAyuda = null;
-            for (String ruta : rutasPosibles) {
-                File temp = new File(ruta);
-                if (temp.exists()) {
-                    archivoAyuda = temp;
-                    break;
-                }
-            }
-
-            if (archivoAyuda != null && archivoAyuda.exists()) {
-                // Para Windows
-                if (System.getProperty("os.name").toLowerCase().contains("win")) {
-                    Runtime.getRuntime().exec("hh.exe " + archivoAyuda.getAbsolutePath());
-                } else {
-                    // Para otros sistemas operativos
-                    Runtime.getRuntime().exec("xdg-open " + archivoAyuda.getAbsolutePath());
-                }
-                System.out.println("Ayuda abierta correctamente");
-            } else {
-                JOptionPane.showMessageDialog(this,
-                    "El archivo de ayuda no se encuentra disponible.\n" +
-                    "Verifique que el archivo 'AyudaComprasHelp.chm' exista.",
-                    "Ayuda no disponible",
-                    JOptionPane.WARNING_MESSAGE);
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Error al abrir la ayuda: " + ex.getMessage());
+        if (!archivo.exists()) {
+            JOptionPane.showMessageDialog(
+                null,
+                "La ayuda no fue encontrada en:\n" + archivo.getAbsolutePath()
+            );
+            return;
         }
+
+        ProcessBuilder pb = new ProcessBuilder(
+            "cmd",
+            "/c",
+            "start",
+            "",
+            archivo.getAbsolutePath()
+        );
+
+        pb.start();
+
+    } catch (Exception ex) {
+        ex.printStackTrace();
+
+        JOptionPane.showMessageDialog(
+            null,
+            "Error al abrir la ayuda:\n" + ex.getMessage()
+        );
+    }
+
 
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void btnSalidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalidaActionPerformed
         this.dispose();
-        bitacoraDAO.insert(idUsuarioConectado, Aplcodigo, "Cerró ventana de mantenimiento de proveedores");
+        bitacoraDAO.insert(idUsuarioConectado, Aplcodigo, "Cerró ventana de mantenimiento de carreraes");
         // TODO add your handling code here:
     }//GEN-LAST:event_btnSalidaActionPerformed
 
     private void btnReportesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportesActionPerformed
-        Connection conn = null;
-        try {
-            conn = Conexion.getConexion();
-
-            if (conn == null) {
-                JOptionPane.showMessageDialog(this, "No se pudo establecer conexión con la base de datos.");
-                return;
-            }
-
-            // Buscar el archivo del reporte en diferentes ubicaciones
-            String[] rutasPosibles = {
-                "src/main/java/Reportes/ComprayVentas/reporteProveedores.jrxml",
-                "src/main/resources/Reportes/ComprayVentas/reporteProveedores.jrxml",
-                "Reportes/ComprayVentas/reporteProveedores.jrxml"
-            };
-
-            File archivoReporte = null;
-            for (String ruta : rutasPosibles) {
-                File temp = new File(ruta);
-                if (temp.exists()) {
-                    archivoReporte = temp;
-                    break;
-                }
-            }
-
-            if (archivoReporte == null || !archivoReporte.exists()) {
-                JOptionPane.showMessageDialog(this,
-                    "No se encontró el archivo del reporte.\n" +
-                    "Verifique que 'reporteProveedores.jrxml' exista en la carpeta de Reportes.");
-                return;
-            }
-
-            // Compilar y llenar el reporte
-            JasperReport jasperReport = JasperCompileManager.compileReport(archivoReporte.getAbsolutePath());
-            Map<String, Object> parametros = new HashMap<>();
-            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parametros, conn);
-
-            // Mostrar el reporte
-            JasperViewer viewer = new JasperViewer(jasperPrint, false);
-            viewer.setTitle("Reporte de Proveedores");
-            viewer.setVisible(true);
-
-            bitacoraDAO.insert(idUsuarioConectado, Aplcodigo, "Generó Reporte de Proveedores");
-
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "Error al generar el reporte de proveedores:\n" + ex.getMessage());
-            ex.printStackTrace();
-        } finally {
+        // TODO add your handling code here:
             try {
-                if (conn != null && !conn.isClosed()) {
-                    conn.close();
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+        Conexion cn = new Conexion();
+        Connection con = cn.getConnection();
+
+        if (con == null) {
+            JOptionPane.showMessageDialog(null, "No se pudo conectar a la base de datos.");
+            return;
         }
+
+        String rutaReporte = "src\\main\\java\\Reportes\\ComprayVentas\\reporteCompras.jasper";
+
+        Map<String, Object> parametros = new HashMap<>();
+
+        JasperPrint reporte = JasperFillManager.fillReport(
+                rutaReporte,
+                parametros,
+                con
+        );
+
+        JasperViewer.viewReport(reporte, false);
+
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(
+                null,
+                "Error al generar el reporte:\n" + e.getMessage()
+        );
+    }
 
         // TODO add your handling code here:
     }//GEN-LAST:event_btnReportesActionPerformed
-
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -627,7 +573,6 @@ public class frmMantenimientoCarreras extends javax.swing.JFrame {
     private javax.swing.JButton btnReportes;
     private javax.swing.JButton btnSalida;
     private javax.swing.JButton jButton6;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JInternalFrame jInternalFrame1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -636,7 +581,8 @@ public class frmMantenimientoCarreras extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTable tablaProveedores;
+    private javax.swing.JTable tablaCarreras;
+    private javax.swing.JTextField txtEstatus;
     private javax.swing.JTextField txtProCodigo;
     private javax.swing.JTextField txtProNit;
     private javax.swing.JTextField txtProNombre;
