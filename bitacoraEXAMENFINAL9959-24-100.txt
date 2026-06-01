@@ -1,0 +1,36 @@
+commit 6e2e990aba23efc4cbf0ec1ea43071128dc4b0ce
+Author: [JennBF] <[jennifer.barrios001@gmail.com]>
+Date:   Mon Jun 1 11:53:37 2026 -0600
+
+    CRUDS COMPLETOS PERO CON ERROR DE VISUALIZACIÓN
+
+commit 6152dce252602de1ce153f0220651d1aa9641f5a
+Author: [JennBF] <[jennifer.barrios001@gmail.com]>
+Date:   Mon Jun 1 11:16:36 2026 -0600
+
+    clase controlador y modelo de carreras
+
+commit 9758da9506063e3e299ea91c83d9dd337b2e064f
+Merge: 61a562a a2385d3
+Author: [JennBF] <[jennifer.barrios001@gmail.com]>
+Date:   Mon Jun 1 10:53:08 2026 -0600
+
+    Merge branch 'RamaMantenimientos9959-24-10016'
+
+commit a2385d308586a0e010cd7d24d1d8a12ff53ade3d
+Author: [JennBF] <[jennifer.barrios001@gmail.com]>
+Date:   Mon Jun 1 10:52:12 2026 -0600
+
+    Agregando estructura, mdi, login y mantenimiento para carreras
+
+commit 61a562a682df342b1c7240f3c750e52d66b36c68
+Author: [JennBF] <[jennifer.barrios001@gmail.com]>
+Date:   Mon Jun 1 10:28:01 2026 -0600
+
+    Copiando Estructura del modelo visto en clase
+
+commit ee194f1e11500454a860ff24849e5a010cb5bc2f
+Author: Jennifer Barrios <jennifer.barrios001@gmail.com>
+Date:   Mon Jun 1 09:44:44 2026 -0600
+
+    Initial commit
